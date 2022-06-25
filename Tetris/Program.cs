@@ -17,6 +17,7 @@ namespace Tetris
         public void Draw() 
         { 
             int y_ = y;
+            Console.BackgroundColor = bg;
 
             Console.ForegroundColor = fg;
 
@@ -203,9 +204,11 @@ namespace Tetris
         static void Main(string[] args)
         {
 
-            
+            Cell cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkYellow);
+            cell.Draw();
 
-            int x = 5;
+            Console.ForegroundColor = ConsoleColor.Black;
+            /*int x = 5;
 
             int y = 5;
 
@@ -352,7 +355,7 @@ namespace Tetris
                 Console.SetCursorPosition(x, y);
 
                 Console.WriteLine("Supreme");
-            } while (true);
+            } while (true);*/
 
          
 
