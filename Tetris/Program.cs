@@ -8,13 +8,156 @@ namespace Tetris
 {
     class Cell
     {
-        private bool[,] cell = new bool[3, 3];
+        private int[,] cell = new int[3, 3];
 
-        public bool[,] tetris
-        {
-            get { return cell; }
-            set { cell = value; }
+        private int x, y;
+
+        private ConsoleColor bg,fg;
+
+        public void Draw() 
+        { 
+            int y_ = y;
+
+            Console.ForegroundColor = fg;
+
+            for(int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    Console.SetCursorPosition(x + j, y_);
+                    Console.Write("{0}", cell[i, j] == 0 ? ' ' : '*');
+                }
+            }
         }
+
+        public void Clear() 
+        { 
+           
+        }
+
+        private int[,] DefaultCell1()
+        {
+            int[,] cell =
+            {
+                { 1, 1, 1 },
+                { 1, 1, 1 },
+                { 1, 1, 1 }
+            };
+
+            return cell;
+        }
+        private int[,] DefaultCell2()
+        {
+            int[,] cell =
+            {
+                { 0, 1, 0 },
+                { 1, 1, 1 },
+                { 0, 0, 0 }
+            };
+
+            return cell;
+        }
+        private int[,] DefaultCell3()
+        {
+            int[,] cell =
+            {
+                { 0, 1, 0 },
+                { 0, 1, 0 },
+                { 0, 1, 0 }
+            };
+
+            return cell;
+        }
+        private int[,] DefaultCell4()
+        {
+            int[,] cell =
+            {
+                { 1, 0, 0 },
+                { 1, 0, 0 },
+                { 1, 1, 1 }
+            };
+
+            return cell;
+        }
+        private int[,] DefaultCell5()
+        {
+            int[,] cell =
+            {
+                { 0, 0, 0 },
+                { 0, 1, 0 },
+                { 0, 0, 0 }
+            };
+
+            return cell;
+        }
+        private int[,] DefaultCell6()
+        {
+            int[,] cell =
+            {
+                { 1, 1, 0 },
+                { 0, 1, 0 },
+                { 0, 1, 1 }
+            };
+
+            return cell;
+        }
+
+
+
+        private int[,] GetCell(int idx)
+        {
+            switch(idx)
+            {
+                case 1:
+                    return DefaultCell1();
+                    
+                case 2:
+                    return DefaultCell2();
+                    
+                case 3:
+                    return DefaultCell3();
+                    
+                case 4:
+                    return DefaultCell4();
+                    
+                case 5:
+                    return DefaultCell5();
+                    
+                
+                    
+            }
+            return DefaultCell6();
+        }
+
+        private int[,] NextCell()
+        {
+            int maxCell = 6;
+
+            Random rando = new Random();
+
+            return GetCell(rando.Next(maxCell) + 1);
+
+        }
+
+        
+
+        public void Move() 
+        { 
+        }
+
+        public Cell(ConsoleColor bg, ConsoleColor fg)
+        {
+            cell = new int[3, 3];
+            x = 0;
+            y = 0;
+            this.bg = bg;
+            this.fg = fg;
+
+            cell = NextCell();
+            
+        }
+
+        
 
 
 
@@ -23,29 +166,36 @@ namespace Tetris
     {
             private static int[,] board = 
             {
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-                { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
             };
 
 
@@ -60,9 +210,9 @@ namespace Tetris
 
             Console.BackgroundColor = ConsoleColor.Red;
 
-            for (int i = 0; i < 23; i++)
+            for (int i = 0; i < 30; i++)
             {
-                for (int j = 0; j < 16; j++)
+                for (int j = 0; j < 15; j++)
                 {
                     if (board[i, j] == 1)
                     {
@@ -89,7 +239,8 @@ namespace Tetris
             Console.SetCursorPosition(x, y);
 
             Console.WriteLine("Supreme");
-            int bottom = 21;
+            int bottom = 29;
+            
             do
             {
                 ConsoleKeyInfo key;
@@ -180,13 +331,13 @@ namespace Tetris
                 if (x == 0)
                     x = 1;
 
-                if (y == bottom && y != 0)
+                if (y == bottom)
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
 
                     Console.ForegroundColor = ConsoleColor.White;
 
-                    Console.SetCursorPosition(x, y);
+                    Console.SetCursorPosition(x, y - 1);
 
                     Console.WriteLine("Supreme");
 
@@ -194,29 +345,9 @@ namespace Tetris
 
                     y = 5;
 
-                    
-                }
-                else if (y == bottom && y == 0)
-                {
-                    
-
-                    Console.BackgroundColor = ConsoleColor.Red;
-
-                    Console.ForegroundColor = ConsoleColor.White;
-
-                    Console.SetCursorPosition(x, y);
-
-                    Console.WriteLine("Supreme");
-
-                    x = 5;
-
-                    y = 5;
-
-                    
+                    bottom--;
                 }
                 
-
-               
                 Console.SetCursorPosition(x, y);
 
                 Console.WriteLine("Supreme");
