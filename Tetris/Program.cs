@@ -27,6 +27,7 @@ namespace Tetris
                     Console.SetCursorPosition(x + j, y_);
                     Console.Write("{0}", cell[i, j] == 0 ? ' ' : '*');
                 }
+                y_++;
             }
         }
 
