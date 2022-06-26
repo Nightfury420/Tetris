@@ -18,29 +18,24 @@ namespace Tetris
         private ConsoleColor bg,fg;
 
         public void Draw() 
-        { 
-            int y_ = y;
+        {
             Console.BackgroundColor = bg;
 
             Console.ForegroundColor = fg;
 
-            for(int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.SetCursorPosition(x + j, y_);
-                    Console.Write("{0}", cell[i, j] == 0 ? ' ' : '*');
-                }
-                y_++;
-            }
+            Draw_();
         }
 
         public void Clear() 
         {
-            int y_ = y;
-            Console.BackgroundColor = ConsoleColor.Black;
-
             Console.ForegroundColor = ConsoleColor.Black;
+
+            Draw_();
+        }
+
+        private void Draw_()
+        {
+            int y_ = y;
 
             for (int i = 0; i < 3; i++)
             {
@@ -53,76 +48,17 @@ namespace Tetris
             }
         }
 
-        /*private int[,] DefaultCell1()         //ARRAYLIST IS CLEARNER
-        {
-            int[,] cell =
-            {
-                { 1, 1, 1 },
-                { 1, 1, 1 },
-                { 1, 1, 1 }
-            };
+        public int size;
 
-            return cell;
-        }
-        private int[,] DefaultCell2()
-        {
-            int[,] cell =
-            {
-                { 0, 1, 0 },
-                { 1, 1, 1 },
-                { 0, 0, 0 }
-            };
-
-            return cell;
-        }
-        private int[,] DefaultCell3()
-        {
-            int[,] cell =
-            {
-                { 0, 1, 0 },
-                { 0, 1, 0 },
-                { 0, 1, 0 }
-            };
-
-            return cell;
-        }
-        private int[,] DefaultCell4()
-        {
-            int[,] cell =
-            {
-                { 1, 0, 0 },
-                { 1, 0, 0 },
-                { 1, 1, 1 }
-            };
-
-            return cell;
-        }
-        private int[,] DefaultCell5()
-        {
-            int[,] cell =
-            {
-                { 0, 0, 0 },
-                { 0, 1, 0 },
-                { 0, 0, 0 }
-            };
-
-            return cell;
-        }
-        private int[,] DefaultCell6()
-        {
-            int[,] cell =
-            {
-                { 1, 1, 0 },
-                { 0, 1, 0 },
-                { 0, 1, 1 }
-            };
-
-            return cell;
-        }*/
+        public int sideWay;
 
         private int[,] GetCell(int idx)
         {
             ArrayList DefaultCell = new ArrayList();
+
+            size = 0;
+
+            sideWay = 0;
 
             DefaultCell.Add(new int[,] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } });
 
@@ -136,44 +72,42 @@ namespace Tetris
 
             DefaultCell.Add(new int[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } });
 
+            switch(idx)
+            {
+                case 0:
+                    sideWay = 3;
+                    size = 3;
+                    break;
+
+                case 1:
+                    sideWay = 3;
+                    size = 3;
+                    break;
+
+                case 2:
+                    sideWay = 1;
+                    size = 1;
+                    break;
+
+                case 3:
+                    sideWay = 3;
+                    size = 3;
+                    break;
+
+                case 4:
+                    sideWay = 1;
+                    size = 3;
+                    break;
+
+                case 5:
+                    size = 3;
+                    sideWay = 2;
+                    break;
+            }    
+
             return (int[,])DefaultCell[idx];
         }
 
-
-      /*  private int[,] GetCell1(int idx)          // The old longer way
-        {
-            switch(idx)
-            {
-                case 1:
-                    return DefaultCell1();
-                    
-                case 2:
-                    return DefaultCell2();
-                    
-                case 3:
-                    return DefaultCell3();
-                    
-                case 4:
-                    return DefaultCell4();
-                    
-                case 5:
-                    return DefaultCell5();
-                    
-                
-                    
-            }
-            return DefaultCell6();
-        }*/
-
-        /*private int[,] NextCell1()            // This one doesn't work with ArrayList
-        {
-            int maxCell = 6;
-
-            Random rando = new Random();
-
-            return GetCell(rando.Next(maxCell) + 1);
-
-        }*/
         private int[,] NextCell()
         {
             int maxCell = 6;
@@ -228,7 +162,7 @@ namespace Tetris
         public Cell(ConsoleColor bg, ConsoleColor fg)
         {
             cell = new int[3, 3];
-            x = 0;
+            x = 6;
             y = 0;
             this.bg = bg;
             this.fg = fg;
@@ -244,46 +178,75 @@ namespace Tetris
     }
     internal class Program
     {
-        /* private static int[,] board = 
-         {
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-             { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
-         };*/
+        private static int[,] board = 
+        {
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 1 },
+             { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 , 2, 2 }
+        };
+
+        private static void DrawBoard()
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    if (board[i, j] == 1)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.Write("|");
+                    }
+
+                    else if (board[i, j] == 2)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.Write("-");
+                    }
+
+                    else if (board[i, j] == 0)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Write(" ");
+                    }
+                }
+                Console.WriteLine();
+            }
+
+            return;
+        }
 
         static Cell cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkYellow);
 
         static void Main(string[] args)
         {
-            
-            cell.Draw();
+            DrawBoard();
 
             var readKeys = new Task(ReadKeys);
 
@@ -305,8 +268,6 @@ namespace Tetris
             Thread.Sleep(1000);
 
             cell.Clear();
-
-
 
 
 
@@ -495,6 +456,8 @@ namespace Tetris
 
         private static void Animation()
         {
+            cell.Draw();
+
             for (; ; )
             {
                 Thread.Sleep(1000);
