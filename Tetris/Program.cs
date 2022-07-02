@@ -77,36 +77,15 @@ namespace Tetris
 
         static Cell cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkYellow);
 
-        static Tetris tetris = new Tetris();
-
         static void Main(string[] args)
         {
             DrawBoard();
 
-            var readKeys = new Task(tetris.ReadKeys);
+            Tetris tetris = new Tetris();
 
-            var animation = new Task(tetris.Animation);
-
-            readKeys.Start();
-
-            animation.Start();
-
-            var tasks = new[] { readKeys };
-
-            Task.WaitAll(tasks);
-
-            Console.CancelKeyPress += (sender, e) =>
-            {
-                Environment.Exit(0);
-            };
-
-            Thread.Sleep(1000);
-
-            cell.Clear();
+            tetris.Run();
 
         }
-
-        
 
     }
 }

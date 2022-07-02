@@ -10,8 +10,34 @@ namespace Tetris
 {
     class Tetris
     {
-        private Cell cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkYellow);
-        public  void ReadKeys()
+        private Cell cell ;
+
+        public void Run()
+        {
+            var readKeys = new Task(ReadKeys);
+
+            var animation = new Task(Animation);
+
+            readKeys.Start();
+
+            animation.Start();
+
+            var tasks = new[] { readKeys };
+
+            Task.WaitAll(tasks);
+
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                Environment.Exit(0);
+            };
+
+        }
+
+        public Tetris()
+        {
+            cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkYellow);
+        }
+        private void ReadKeys()
         {
             ConsoleKeyInfo key = new ConsoleKeyInfo();
             while (!Console.KeyAvailable && key.Key != ConsoleKey.Escape)
@@ -41,7 +67,7 @@ namespace Tetris
             return;
         }
 
-        public  void Animation()
+        private void Animation()
         {
             cell.Draw();
 
