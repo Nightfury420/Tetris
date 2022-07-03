@@ -11,16 +11,20 @@ namespace Tetris
     class Tetris
     {
         private Cell cell ;
+        private Board board;
 
         public void Run()
         {
+            board.drawBoard();
+
             var readKeys = new Task(ReadKeys);
 
             var animation = new Task(Animation);
 
+            cell.Draw();
             readKeys.Start();
 
-            animation.Start();
+            //animation.Start();
 
             var tasks = new[] { readKeys };
 
@@ -35,7 +39,8 @@ namespace Tetris
 
         public Tetris()
         {
-            cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkYellow);
+            cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkRed);
+            board = new Board(ConsoleColor.Black, ConsoleColor.DarkBlue);
         }
         private void ReadKeys()
         {

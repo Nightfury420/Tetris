@@ -75,15 +75,16 @@ namespace Tetris
             return;
         }
 
-        static Cell cell = new Cell(ConsoleColor.Black, ConsoleColor.DarkYellow);
-
         static void Main(string[] args)
         {
-            DrawBoard();
+            //DrawBoard();
 
             Tetris tetris = new Tetris();
 
             tetris.Run();
+
+        
+
 
         }
 

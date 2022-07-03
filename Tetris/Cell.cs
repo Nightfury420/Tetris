@@ -18,32 +18,34 @@ namespace Tetris
 
         public void Draw()
         {
-            Console.BackgroundColor = bg;
 
-            Console.ForegroundColor = fg;
-
-            Draw_();
+            Draw_(bg, fg);
         }
 
         public void Clear()
         {
-            Console.ForegroundColor = ConsoleColor.Black;
-
-            Draw_();
+            Draw_(bg, bg);
         }
 
-        private void Draw_()
+        private Draw pen;
+
+        private void Draw_(ConsoleColor bg_, ConsoleColor fg_)
         {
             int y_ = y;
-
             for (int i = 0; i < 3; i++)
             {
+                int xL = x;
+                int yT = y + (i * pen.Height);
                 for (int j = 0; j < 3; j++)
                 {
+                    xL = x + (j * pen.Width);
+                
                     Console.SetCursorPosition(x + j, y_);
-                    Console.Write("{0}", cell[i, j] == 0 ? ' ' : '*');
+
+                    if (cell[i, j] == 1)
+                        pen.drawRec(xL, yT, xL + pen.Width, yT + pen.Height, fg_);
+
                 }
-                y_++;
             }
         }
 
@@ -116,6 +118,8 @@ namespace Tetris
 
         public void Rotate()
         {
+            Clear();
+
             const int N = 3;
             int[,] tmp = new int[3, 3];
 
@@ -129,6 +133,7 @@ namespace Tetris
 
             cell = tmp;
 
+
             Draw();
         }
 
@@ -141,6 +146,8 @@ namespace Tetris
             this.fg = fg;
 
             cell = NextCell();
+
+            pen = new Draw();
 
         }
     }
