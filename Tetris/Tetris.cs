@@ -52,10 +52,27 @@ namespace Tetris
                 switch (key.Key)
                 {
                     case ConsoleKey.LeftArrow:
+                        int i, j;
+                        for(j = 0; j < 3; j++)
+                        {
+                            for (i = 0; i < 3; i++)
+                                if (cell.cell[i, j] == 1)
+                                    break;
+                            if (i < 3)
+                                break;
+                        }
                         cell.X = cell.X - 1;
                         break;
 
                     case ConsoleKey.RightArrow:
+                        for (j = 2; j >= 0; j--)
+                        {
+                            for (i = 0; i < 3; i++)
+                                if (cell.cell[i, j] == 1)
+                                    break;
+                            if (i < 3)
+                                break;
+                        }
                         cell.X = cell.X + 1;
                         break;
 
@@ -64,6 +81,14 @@ namespace Tetris
                         break;
 
                     case ConsoleKey.DownArrow:
+                        for (i = 2; i >= 0; i--)
+                        {
+                            for (j = 0; j < 3; j++)
+                                if (cell.cell[i, j] == 1)
+                                    break;
+                            if (j < 3)
+                                break;
+                        }
                         cell.Y = cell.Y + 3;
                         break;
                 }

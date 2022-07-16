@@ -10,7 +10,7 @@ namespace Tetris
 {
     class Cell
     {
-        private int[,] cell = new int[3, 3];
+        public int[,] cell = new int[3, 3];
 
         private int x, y;
 
